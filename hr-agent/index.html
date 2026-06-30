@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>C.H. Robinson and Microsoft: The HR Agent That Turns Feedback Into Action</title>
+<meta name="description" content="A point of view for C.H. Robinson on the simplest path to an HR agent that brings employee feedback and HR knowledge into Copilot, where leaders already work." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  :root{
+    --ink:#10243A;
+    --navy:#004986;
+    --blue:#0071C7;
+    --blue-2:#005CA3;
+    --cyan:#00A3E0;
+    --cyan-soft:#5DC4ED;
+    --slate:#46484A;
+    --slate-soft:#5C6B7A;
+    --paper:#FFFFFF;
+    --paper-2:#F4F7FB;
+    --paper-3:#E9F0F7;
+    --line:#E2E8F0;
+    --line-dark:rgba(255,255,255,.14);
+    --shadow:0 24px 60px -30px rgba(0,73,134,.5);
+    --shadow-sm:0 12px 32px -20px rgba(0,73,134,.42);
+    --display:'Nunito Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+    --body:'Open Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--cyan);color:#fff}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+  h1,h2,h3,h4,.display{font-family:var(--display)}
+
+  /* Top bar */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:15px 32px;backdrop-filter:blur(14px);background:rgba(16,36,58,.55);border-bottom:1px solid var(--line-dark);transition:background .4s ease}
+  .topbar.solid{background:rgba(16,36,58,.94)}
+  .brandmark{display:flex;align-items:center;gap:12px;color:#fff}
+  .logo-dot{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:15px;color:#fff;letter-spacing:-.5px}
+  .wordmark{display:flex;flex-direction:column;line-height:1}
+  .wordmark .w1{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:.3px;color:#fff}
+  .wordmark .w2{font-family:var(--display);font-weight:600;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan-soft);margin-top:3px}
+  .topnav{display:flex;gap:26px;align-items:center}
+  .topnav a{color:rgba(255,255,255,.82);font-size:13px;font-weight:600;transition:color .25s}
+  .topnav a:hover{color:var(--cyan-soft)}
+  .topnav .ms{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.55);padding-left:24px;border-left:1px solid var(--line-dark)}
+  @media(max-width:880px){.topnav a:not(.ms){display:none}}
+
+  /* Hero */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;color:#fff;overflow:hidden;background:radial-gradient(130% 100% at 80% -10%,#0071C7 0%,#004986 42%,#10243A 100%)}
+  .hero .glow{position:absolute;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(0,163,224,.28),transparent 64%);top:-160px;right:-120px;filter:blur(6px)}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line-dark) 1px,transparent 1px),linear-gradient(90deg,var(--line-dark) 1px,transparent 1px);background-size:62px 62px;mask-image:radial-gradient(120% 80% at 50% 0%,#000 0%,transparent 70%);opacity:.5}
+  .waves{position:absolute;bottom:-2px;left:0;width:100%;height:170px;opacity:.6}
+  .hero-inner{position:relative;z-index:2;padding:118px 0 96px}
+  .eyebrow{display:inline-flex;align-items:center;gap:11px;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan-soft);font-weight:700;margin-bottom:24px}
+  .eyebrow::before{content:"";width:32px;height:2px;background:var(--cyan)}
+  .hero h1{font-weight:900;font-size:clamp(36px,5.6vw,72px);line-height:1.04;letter-spacing:-1px;max-width:16ch}
+  .hero h1 .o{color:var(--cyan)}
+  .hero .spine{margin-top:24px;font-family:var(--display);font-weight:700;font-size:clamp(17px,2vw,23px);color:#fff;max-width:32ch;line-height:1.3}
+  .hero .spine .o{color:var(--cyan-soft)}
+  .hero .lede{margin-top:22px;max-width:60ch;font-size:clamp(15px,1.6vw,18px);color:rgba(255,255,255,.82);font-weight:300}
+  .hero .cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 28px;border-radius:6px;font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.2px;transition:transform .25s,box-shadow .25s,background .25s;cursor:pointer;border:none}
+  .btn-cyan{background:var(--cyan);color:#fff;box-shadow:0 14px 32px -14px rgba(0,163,224,.85)}
+  .btn-cyan:hover{transform:translateY(-3px);background:var(--blue);box-shadow:0 20px 42px -14px rgba(0,163,224,.95)}
+  .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3)}
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan-soft)}
+  .hero-meta{position:absolute;bottom:32px;left:0;width:100%;z-index:2}
+  .hero-meta .row{display:flex;gap:36px;flex-wrap:wrap;font-size:12.5px;color:rgba(255,255,255,.6)}
+  .hero-meta .row b{color:var(--cyan-soft);font-weight:700}
+
+  /* Sections */
+  section{padding:92px 0;position:relative}
+  .sec-label{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;font-weight:800;color:var(--blue);margin-bottom:15px;font-family:var(--display)}
+  .sec-title{font-family:var(--display);font-weight:900;font-size:clamp(28px,3.7vw,46px);line-height:1.1;letter-spacing:-.6px;color:var(--navy)}
+  .sec-title.light{color:#fff}
+  .sec-intro{margin-top:18px;max-width:64ch;font-size:17.5px;color:var(--slate-soft);font-weight:400}
+  .sec-intro.light{color:rgba(255,255,255,.78)}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* Vision quotes */
+  .listened{background:var(--paper)}
+  .quote-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:46px}
+  @media(max-width:760px){.quote-grid{grid-template-columns:1fr}}
+  .qcard{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:30px;position:relative;overflow:hidden}
+  .qcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cyan)}
+  .qcard .qmark{font-family:var(--display);font-size:54px;line-height:.5;color:var(--cyan);opacity:.3;height:24px}
+  .qcard p{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.35;color:var(--navy)}
+  .qcard .src{margin-top:15px;font-size:11.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--slate-soft);font-weight:700}
+
+  /* Principle */
+  .principle{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-2) 100%)}
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;margin-top:38px}
+  @media(max-width:860px){.split{grid-template-columns:1fr;gap:34px}}
+  .principle .lead{font-family:var(--display);font-weight:700;font-size:clamp(22px,2.7vw,30px);line-height:1.28;color:var(--navy)}
+  .principle .lead b{color:var(--blue);font-weight:800}
+  .principle .body{margin-top:20px;font-size:16px;color:var(--slate-soft)}
+  .vs{border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm);background:#fff}
+  .vs-row{display:flex;align-items:flex-start;gap:15px;padding:22px 24px;border-bottom:1px solid var(--line)}
+  .vs-row:last-child{border-bottom:none}
+  .vs-row.bad{background:#fff6f3}
+  .vs-row.good{background:#eef8f3}
+  .vs-ic{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px;color:#fff;font-family:var(--display)}
+  .vs-row.bad .vs-ic{background:#d4502f}
+  .vs-row.good .vs-ic{background:#1f9d5a}
+  .vs-row h4{font-family:var(--display);font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px}
+  .vs-row p{font-size:13.5px;color:var(--slate-soft)}
+
+  /* Spine band */
+  .spine-band{background:radial-gradient(120% 130% at 50% -10%,#0071C7,#004986 48%,#10243A);color:#fff;position:relative;overflow:hidden}
+  .spine-band .glow{position:absolute;width:540px;height:540px;border-radius:50%;background:radial-gradient(circle,rgba(0,163,224,.2),transparent 62%);top:-200px;left:-120px}
+  .spine-headline{position:relative;z-index:2;text-align:center;max-width:900px;margin:0 auto}
+  .spine-headline h2{font-family:var(--display);font-weight:900;font-size:clamp(26px,3.6vw,42px);line-height:1.16;letter-spacing:-.5px}
+  .spine-headline h2 .o{color:var(--cyan)}
+  .spine-headline p{margin-top:18px;font-size:17px;color:rgba(255,255,255,.76);font-weight:300;max-width:62ch;margin-left:auto;margin-right:auto}
+  .does-grid{position:relative;z-index:2;margin-top:52px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:780px){.does-grid{grid-template-columns:1fr}}
+  .does-card{border:1px solid var(--line-dark);border-radius:12px;padding:28px 24px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));transition:transform .35s,border-color .35s}
+  .does-card:hover{transform:translateY(-4px);border-color:rgba(0,163,224,.5)}
+  .does-card .step{font-family:var(--display);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800;color:var(--cyan-soft)}
+  .does-card h4{font-family:var(--display);font-size:19px;font-weight:800;margin:10px 0 7px}
+  .does-card p{font-size:14px;color:rgba(255,255,255,.74);font-weight:300}
+  .sticky-line{position:relative;z-index:2;margin:48px auto 0;max-width:780px;text-align:center;font-family:var(--display);font-weight:800;font-size:clamp(18px,2.3vw,27px);line-height:1.3;color:#fff}
+  .sticky-line::before{content:"";display:block;width:48px;height:3px;background:var(--cyan);margin:0 auto 22px;border-radius:2px}
+  .sticky-line .o{color:var(--cyan-soft)}
+
+  /* Ethos */
+  .ethos{background:var(--paper)}
+  .ethos-grid{margin-top:46px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:780px){.ethos-grid{grid-template-columns:1fr}}
+  .ecard{border:1px solid var(--line);border-radius:12px;padding:28px 26px;background:var(--paper-2);transition:transform .35s,box-shadow .35s}
+  .ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-sm)}
+  .ecard .ei{font-family:var(--display);font-weight:900;font-size:15px;color:#fff;background:var(--blue);width:38px;height:38px;border-radius:10px;display:grid;place-items:center}
+  .ecard h4{font-family:var(--display);font-size:17px;font-weight:800;color:var(--navy);margin:16px 0 8px}
+  .ecard p{font-size:14.5px;color:var(--slate-soft)}
+  .ethos-line{margin-top:38px;text-align:center;font-family:var(--display);font-size:clamp(17px,2vw,22px);font-weight:700;color:var(--navy)}
+  .ethos-line b{color:var(--blue);font-weight:800}
+
+  /* Architecture */
+  .arch{background:radial-gradient(120% 100% at 50% 0%,#0071C7,#004986 50%,#10243A);color:#fff}
+  .arch-stack{margin-top:50px;display:flex;flex-direction:column;gap:16px;max-width:920px;margin-left:auto;margin-right:auto}
+  .layer{position:relative;border:1px solid var(--line-dark);border-radius:12px;padding:30px 32px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));transition:transform .4s cubic-bezier(.2,.7,.2,1),border-color .4s,box-shadow .4s}
+  .layer:hover{transform:translateY(-4px);border-color:rgba(0,163,224,.55);box-shadow:0 30px 60px -32px rgba(0,0,0,.7)}
+  .layer .ltag{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:800;color:var(--cyan-soft);font-family:var(--display)}
+  .layer .lhead{display:flex;align-items:baseline;gap:13px;flex-wrap:wrap;margin-top:8px}
+  .layer h3{font-family:var(--display);font-size:25px;font-weight:800}
+  .layer .lprod{font-size:13px;color:var(--cyan-soft);font-weight:700;font-family:var(--display)}
+  .layer p{margin-top:10px;color:rgba(255,255,255,.78);font-size:15px;font-weight:300;max-width:72ch}
+  .layer .chips{margin-top:16px;display:flex;gap:9px;flex-wrap:wrap}
+  .chip{font-size:12px;padding:6px 13px;border-radius:40px;border:1px solid var(--line-dark);color:rgba(255,255,255,.85);background:rgba(255,255,255,.04);font-weight:500}
+  .chip.opt{border-color:rgba(0,163,224,.5);color:var(--cyan-soft)}
+  .conn{display:grid;place-items:center;color:var(--cyan);font-size:20px;opacity:.8;height:6px}
+  .layer-num{position:absolute;top:22px;right:28px;font-family:var(--display);font-size:50px;color:rgba(0,163,224,.2);font-weight:900;line-height:1}
+  .foundation-note{margin:38px auto 0;max-width:800px;text-align:center;font-size:15px;color:rgba(255,255,255,.72);font-weight:300}
+  .foundation-note b{color:var(--cyan-soft);font-weight:700}
+
+  /* Demo */
+  .act{background:var(--paper-2)}
+  .demo{margin-top:46px;display:grid;grid-template-columns:.82fr 1.18fr;gap:30px;align-items:stretch}
+  @media(max-width:880px){.demo{grid-template-columns:1fr}}
+  .qpicker{display:flex;flex-direction:column;gap:11px}
+  .qbtn{text-align:left;padding:18px 20px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-family:var(--body);font-size:15px;font-weight:600;color:var(--navy);transition:all .25s;box-shadow:var(--shadow-sm)}
+  .qbtn:hover{border-color:var(--cyan)}
+  .qbtn.active{background:var(--navy);color:#fff;border-color:var(--navy);transform:translateX(5px)}
+  .qbtn .qk{display:block;font-family:var(--display);font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--blue);font-weight:800;margin-bottom:5px}
+  .qbtn.active .qk{color:var(--cyan-soft)}
+  .screen{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;min-height:520px}
+  .screen-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;background:var(--ink);border-bottom:1px solid rgba(255,255,255,.08)}
+  .dot{width:10px;height:10px;border-radius:50%}
+  .screen-bar .title{margin-left:12px;color:rgba(255,255,255,.72);font-size:12px;letter-spacing:.6px;font-weight:600;font-family:var(--display)}
+  .screen-body{padding:24px 26px;flex:1;display:flex;flex-direction:column;gap:14px}
+  .bubble{max-width:90%;padding:13px 17px;border-radius:14px;font-size:14.5px;line-height:1.5}
+  .bubble.user{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px;animation:rise .4s both}
+  .investigate{align-self:stretch}
+  .inv-label{font-family:var(--display);font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--slate-soft);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .inv-label .spin{width:13px;height:13px;border:2px solid var(--line);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
+  .inv-label.done .spin{border:2px solid var(--cyan);border-top-color:var(--cyan);animation:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .pull{display:flex;align-items:center;gap:12px;padding:11px 15px;border:1px solid var(--line);border-radius:10px;background:var(--paper-2);margin-bottom:8px;animation:rise .45s both}
+  .pull .pk{flex:0 0 16px;height:16px;border-radius:50%;background:#1f9d5a;display:grid;place-items:center;color:#fff;font-size:9px;font-weight:800}
+  .pull .pq{flex:1;font-size:13.5px;color:var(--slate);font-weight:500}
+  .pull .src-tag{font-size:9.5px;color:var(--blue);font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-top:2px;display:block}
+  .pull .pv{font-family:var(--display);font-weight:800;font-size:13px;color:var(--navy);white-space:nowrap}
+  .insight{margin-top:4px;padding:18px 20px;border-radius:12px;border:1px solid rgba(0,163,224,.35);background:linear-gradient(135deg,rgba(0,163,224,.08),rgba(93,196,237,.04));animation:rise .5s both}
+  .insight .il{font-family:var(--display);font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--blue);font-weight:800;margin-bottom:7px}
+  .insight p{font-size:14.5px;color:var(--ink);line-height:1.5}
+  .actions{margin-top:auto;display:flex;gap:9px;flex-wrap:wrap;padding-top:14px;border-top:1px dashed var(--line)}
+  .act-pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-size:12.5px;font-weight:700;color:#fff;padding:9px 15px;border-radius:40px;background:var(--cyan);animation:rise .5s both}
+  .act-pill:nth-child(2){background:var(--navy)}
+  .act-pill:nth-child(3){background:var(--slate)}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .act-caption{margin-top:14px;font-size:12.5px;color:var(--slate-soft)}
+  .act-caption b{color:var(--blue);font-weight:700}
+
+  /* Pilot */
+  .pilot{background:linear-gradient(180deg,var(--paper-2),var(--paper))}
+  .pillars{margin-top:46px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:760px){.pillars{grid-template-columns:1fr}}
+  .pillar{background:#fff;border:1px solid var(--line);border-radius:12px;padding:30px 28px;box-shadow:var(--shadow-sm);transition:transform .35s,box-shadow .35s}
+  .pillar:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .pillar .pn{font-family:var(--display);font-size:15px;font-weight:900;color:#fff;background:var(--navy);width:40px;height:40px;border-radius:10px;display:grid;place-items:center;margin-bottom:18px}
+  .pillar h4{font-family:var(--display);font-size:18px;font-weight:800;color:var(--navy);margin-bottom:9px}
+  .pillar p{font-size:14.5px;color:var(--slate-soft)}
+  .kpi{margin-top:46px;background:var(--ink);border-radius:14px;padding:44px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;justify-content:space-between;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .kpi::after{content:"";position:absolute;right:-50px;top:-50px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(0,163,224,.28),transparent 66%)}
+  .kpi .ktext{position:relative;z-index:2}
+  .kpi .ksm{font-family:var(--display);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan-soft);font-weight:800;margin-bottom:10px}
+  .kpi .kbig{font-family:var(--display);font-size:clamp(22px,2.7vw,32px);color:#fff;font-weight:800;line-height:1.22;max-width:26ch}
+  .kpi .kbig b{color:var(--cyan-soft)}
+
+  /* Roadmap */
+  .road{background:var(--paper)}
+  .tabs{margin-top:42px;display:flex;gap:10px;flex-wrap:wrap}
+  .tab{padding:12px 22px;border-radius:40px;border:1px solid var(--line);background:#fff;cursor:pointer;font-family:var(--display);font-weight:700;font-size:14px;color:var(--navy);transition:all .25s}
+  .tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .tab .ph{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue);display:block;font-weight:800}
+  .tab.active .ph{color:var(--cyan-soft)}
+  .panel{margin-top:28px;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:38px 40px}
+  .panel h3{font-family:var(--display);font-size:28px;color:var(--navy);font-weight:800;margin-bottom:6px}
+  .panel .ptag{font-family:var(--display);font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--blue);font-weight:800;margin-bottom:16px}
+  .panel ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:13px 30px;margin-top:8px}
+  @media(max-width:680px){.panel ul{grid-template-columns:1fr}}
+  .panel li{display:flex;gap:12px;font-size:15px;color:var(--slate-soft)}
+  .panel li::before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--cyan);margin-top:8px}
+
+  /* Closing / footer */
+  .closing{background:radial-gradient(120% 130% at 50% -20%,#0071C7,#004986 46%,#10243A);color:#fff;text-align:center;padding:108px 0}
+  .closing h2{font-family:var(--display);font-size:clamp(30px,4.6vw,54px);font-weight:900;line-height:1.06;max-width:20ch;margin:0 auto;letter-spacing:-.5px}
+  .closing h2 .o{color:var(--cyan)}
+  .closing p{margin:24px auto 0;max-width:56ch;color:rgba(255,255,255,.8);font-size:17.5px;font-weight:300}
+  .closing .cta{margin-top:38px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  footer{background:var(--ink);color:rgba(255,255,255,.6);padding:38px 0;font-size:12.5px}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .foot-row .fbrand{display:flex;align-items:center;gap:12px}
+  .foot-row .fbrand .f1{font-family:var(--display);font-weight:800;font-size:16px;color:#fff}
+  .disc{margin-top:18px;font-size:11px;color:rgba(255,255,255,.36);max-width:84ch;line-height:1.6}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef} = React;
+
+function useReveal(){
+  useEffect(()=>{
+    const els=document.querySelectorAll('.reveal');
+    const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.13});
+    els.forEach(el=>io.observe(el));
+    return ()=>io.disconnect();
+  });
+}
+
+function TopBar(){
+  const [solid,setSolid]=useState(false);
+  useEffect(()=>{
+    const f=()=>setSolid(window.scrollY>40);
+    window.addEventListener('scroll',f);return ()=>window.removeEventListener('scroll',f);
+  },[]);
+  return (
+    <div className={"topbar"+(solid?" solid":"")}>
+      <div className="brandmark">
+        <div className="logo-dot">CH</div>
+        <div className="wordmark">
+          <span className="w1">C.H. Robinson</span>
+          <span className="w2">HR Agent, Point of View</span>
+        </div>
+      </div>
+      <nav className="topnav">
+        <a href="#vision">Your Vision</a>
+        <a href="#principle">The Principle</a>
+        <a href="#spine">Listen, Interpret, Act</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#act">The Agent at Work</a>
+        <a href="#business">Make It Matter</a>
+        <a href="#pilot">The Pilot</a>
+        <span className="ms">With Microsoft</span>
+      </nav>
+    </div>
+  );
+}
+
+function Hero(){
+  return (
+    <header className="hero" id="top">
+      <div className="glow"></div>
+      <div className="hero-grid"></div>
+      <div className="wrap hero-inner">
+        <div className="eyebrow">A Point of View, prepared for C.H. Robinson</div>
+        <h1>The HR agent that turns feedback into <span className="o">action.</span></h1>
+        <div className="spine">Surveys already tell you how people feel. The gap is what happens <span className="o">next.</span></div>
+        <p className="lede">
+          You run pulse surveys and an annual engagement survey. The analytics exist. The hard part is the last mile,
+          getting a busy manager to read the signal and actually act on it. Here is the simplest path to close that gap,
+          inside Copilot, where your leaders already work, without forcing anyone into another tool.
+        </p>
+        <div className="cta">
+          <a className="btn btn-cyan" href="#principle">See the approach</a>
+          <a className="btn btn-ghost" href="#act">Watch the agent work</a>
+        </div>
+      </div>
+      <svg className="waves" viewBox="0 0 1440 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 84 C 240 28 480 140 720 84 C 960 28 1200 140 1440 84 L1440 170 L0 170 Z" fill="rgba(0,163,224,.12)"/>
+        <path d="M0 112 C 280 64 520 158 760 112 C 1000 64 1220 150 1440 112 L1440 170 L0 170 Z" fill="rgba(255,255,255,.05)"/>
+      </svg>
+      <div className="hero-meta">
+        <div className="wrap">
+          <div className="row">
+            <span>Use case: <b>HR agent for leaders and managers</b></span>
+            <span>Signal: <b>Employee listening + HR knowledge</b></span>
+            <span>Surface: <b>Copilot, where people already work</b></span>
+            <span>Posture: <b>Start simple, prove it, expand</b></span>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function Vision(){
+  const quotes=[
+    {t:"We use employee engagement surveys, and analytics that summarize how people are feeling on several different subjects.",s:"The signal you already have"},
+    {t:"We didn't want people to log into another tool. It's unlikely many will, because we already have Copilot.",s:"The adoption reality"},
+    {t:"An AI leadership coach that turns employee feedback into practical action.",s:"What you want it to do"},
+    {t:"An agent people don't have to know to go to. It just lives where they work.",s:"The front door for HR"},
+  ];
+  return (
+    <section className="listened" id="vision">
+      <div className="wrap">
+        <div className="reveal">
+          <div className="sec-label">What you told us</div>
+          <h2 className="sec-title">We listened first. Here is your<br/>vision, in your own words.</h2>
+          <p className="sec-intro">Before recommending anything, the goal was to understand what you are actually trying to fix. Four things came through clearly.</p>
+        </div>
+        <div className="quote-grid">
+          {quotes.map((q,i)=>(
+            <div className="qcard reveal" key={i} style={{transitionDelay:(i*80)+'ms'}}>
+              <div className="qmark">&ldquo;</div>
+              <p>{q.t}</p>
+              <div className="src">{q.s}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Principle(){
+  return (
+    <section className="principle" id="principle">
+      <div className="wrap">
+        <div className="reveal">
+          <div className="sec-label">The Principle</div>
+          <h2 className="sec-title">The blocker is not the data.<br/>It is the last mile.</h2>
+        </div>
+        <div className="split">
+          <div className="reveal">
+            <p className="lead">
+              The instinct is to wire every system together first. A deep integration into the survey platform, a
+              connection to the knowledge base, a project that has to finish before anyone sees value. That path is
+              where this stalls. The integration becomes <b>the blocker, not the win.</b>
+            </p>
+            <p className="body">
+              You do not need a months-long integration to prove this. You already have the signal, and you already have
+              Copilot. So the first version of the agent meets your leaders where they work and acts on the feedback you
+              have today. No new tool to log into. No security project to clear before the first manager gets value.
+            </p>
+          </div>
+          <div className="vs reveal" style={{transitionDelay:'110ms'}}>
+            <div className="vs-row bad">
+              <div className="vs-ic">&times;</div>
+              <div><h4>Integrate everything first</h4><p>A complex connection into the survey platform, gated by security review. Value waits behind a build that may take quarters.</p></div>
+            </div>
+            <div className="vs-row good">
+              <div className="vs-ic">&#10003;</div>
+              <div><h4>Put the agent in Copilot now</h4><p>Bring the feedback you already have into Copilot, where leaders work. Prove the value in days. Deepen the integration later, once it has earned the move.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SpineBand(){
+  const cards=[
+    {s:"Step 1",h:"Listen",p:"Your engagement and pulse surveys already capture how people feel. That signal is the input. The agent meets it where it lives, no new survey tool required to begin."},
+    {s:"Step 2",h:"Interpret",p:"The agent reads the feedback and the HR knowledge around it, then explains what it means for a specific leader and team. Theme, trend, and what is driving it."},
+    {s:"Step 3",h:"Act",p:"It turns insight into a next step. Suggested actions, the right policy, a coaching nudge, a follow-up. The part that today depends on a busy manager remembering to act."},
+  ];
+  return (
+    <section className="spine-band" id="spine">
+      <div className="glow"></div>
+      <div className="wrap">
+        <div className="spine-headline reveal">
+          <h2>Listen. Interpret. <span className="o">Act.</span></h2>
+          <p>You have the first two. The agent's real job is the third, the one that decides whether engagement actually improves. A dashboard reports. An agent helps a leader do something about it.</p>
+        </div>
+        <div className="does-grid">
+          {cards.map((c,i)=>(
+            <div className="does-card reveal" key={i} style={{transitionDelay:(i*100)+'ms'}}>
+              <span className="step">{c.s}</span>
+              <h4>{c.h}</h4>
+              <p>{c.p}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Ethos(){
+  const cards=[
+    {i:"01",h:"Start with what you already have",p:"Use Copilot, which your leaders already use, and the survey signal you already collect. No new system to adopt to prove a simple idea. Value in days, not quarters."},
+    {i:"02",h:"Earn trust with useful, grounded answers",p:"Every answer is grounded in your real feedback and your real HR content, with sources. A leader trusts it because it reflects their team, not a generic script."},
+    {i:"03",h:"Expand only when it earns the move",p:"Deeper, live integrations and a native listening option come later, once the agent has proven it changes behavior. The foundation carries forward, so there is nothing to rebuild."}
+  ];
+  return (
+    <section className="ethos" id="ethos">
+      <div className="wrap">
+        <div className="reveal">
+          <div className="sec-label">How we approach it</div>
+          <h2 className="sec-title">Start simple. Prove it changes<br/>behavior. Then expand.</h2>
+        </div>
+        <div className="ethos-grid">
+          {cards.map((c,i)=>(
+            <div className="ecard reveal" key={i} style={{transitionDelay:(i*90)+'ms'}}>
+              <div className="ei">{c.i}</div>
+              <h4>{c.h}</h4>
+              <p>{c.p}</p>
+            </div>
+          ))}
+        </div>
+        <div className="ethos-line reveal">Quick time to value. But the <b>right value</b>, grounded and trusted, because that is what gets a manager to act.</div>
+      </div>
+    </section>
+  );
+}
+
+function Architecture(){
+  return (
+    <section className="arch" id="architecture">
+      <div className="wrap">
+        <div className="reveal" style={{textAlign:'center',maxWidth:'780px',margin:'0 auto'}}>
+          <div className="sec-label" style={{color:'var(--cyan-soft)'}}>The Architecture</div>
+          <h2 className="sec-title light">One front door. The signal<br/>you already have behind it.</h2>
+          <p className="sec-intro light" style={{margin:'18px auto 0'}}>No system the leader has to choose. They ask in Copilot, and the agent reaches the right source for them.</p>
+        </div>
+        <div className="arch-stack">
+          <div className="layer reveal">
+            <div className="layer-num">01</div>
+            <div className="ltag">The Front Door, where leaders already work</div>
+            <div className="lhead"><h3>An HR agent in Copilot</h3><span className="lprod">Microsoft 365 Copilot, which you already have</span></div>
+            <p>One agent, living in Copilot and Teams. A leader asks a question about their team in plain language and never has to know which HR system holds the answer. This is the adoption unlock, because it removes the one thing that kills HR tools, making people log in somewhere else.</p>
+            <div className="chips"><span className="chip">Lives in Copilot and Teams</span><span className="chip">No new tool to log into</span><span className="chip">Plain-language questions</span><span className="chip">Answers with sources</span></div>
+          </div>
+          <div className="conn">&#9660;</div>
+          <div className="layer reveal" style={{transitionDelay:'110ms'}}>
+            <div className="layer-num">02</div>
+            <div className="ltag">The Signal, what the agent grounds on</div>
+            <div className="lhead"><h3>Your feedback and HR knowledge</h3><span className="lprod">Start with what you have today</span></div>
+            <p>To begin, the agent grounds on the survey results you already produce and your existing HR content: policies, the leadership hub, knowledge articles. The quick win needs no complex platform integration. As it proves out, you can add a live connection to your survey platform, and a native pulse-listening option, when each earns its place.</p>
+            <div className="chips"><span className="chip">Engagement and pulse results</span><span className="chip">HR policies and knowledge</span><span className="chip">Leadership hub content</span><span className="chip opt">Optional later: native pulse listening</span><span className="chip opt">Optional later: live survey integration</span></div>
+          </div>
+        </div>
+        <p className="foundation-note reveal">
+          The honest part. <b>The quick win uses what you already own.</b> A native ongoing-listening option and deeper
+          live integrations are real, valuable next steps, and they are choices you make once the agent has proven it changes how leaders act, not prerequisites for starting.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function AgentAtWork(){
+  const scenarios=[
+    {
+      k:"Read my team", q:"How is my team feeling after the last pulse?",
+      pulls:[
+        {q:"Latest pulse, your team vs company", v:"Engagement 72, -6 pts", t:""},
+        {q:"Lowest-scoring themes", v:"Workload, recognition", t:""},
+        {q:"Change since last pulse", v:"Workload down 9 pts", t:""},
+        {q:"Relevant HR guidance", v:"3 articles found", t:""},
+      ],
+      insight:"Your team's engagement is six points below the company average, and the drop is concentrated in workload and recognition. Workload fell nine points since the last pulse, so it is the signal to act on first. This is a manageable, specific issue, not a broad morale problem.",
+      actions:["Draft a team check-in","Suggest 2 recognition actions","Open the workload guide"]
+    },
+    {
+      k:"What do I do", q:"What should I actually do about the workload score?",
+      pulls:[
+        {q:"Drivers behind the workload theme", v:"Coverage, after-hours", t:""},
+        {q:"Company policy on workload", v:"Flex + staffing policy", t:""},
+        {q:"Coaching guidance for managers", v:"Leadership hub play", t:""},
+        {q:"Comparable teams that improved", v:"Pattern found", t:""},
+      ],
+      insight:"The workload signal is driven by coverage gaps and after-hours messages, not raw volume. Two things tend to move it: a clear after-hours norm, and rebalancing coverage. Here is the relevant policy and a short manager play from the leadership hub to run with your team this week.",
+      actions:["Draft the team norm","Book a 1:1 series","Save this as a plan"]
+    },
+    {
+      k:"Follow through", q:"Did the actions I took last quarter help?",
+      pulls:[
+        {q:"Actions you committed last quarter", v:"2 of 3 done", t:""},
+        {q:"Workload theme, then vs now", v:"+11 pts", t:""},
+        {q:"Recognition theme, then vs now", v:"+4 pts", t:""},
+        {q:"Open items still pending", v:"1 outstanding", t:""},
+      ],
+      insight:"Workload recovered eleven points where you set the after-hours norm, so that action worked. Recognition moved less, only four points, and one commitment is still open. Worth closing that one and repeating the recognition play, which has more room to improve.",
+      actions:["Close the open item","Repeat the recognition play","Share the win with HR"]
+    }
+  ];
+  const [i,setI]=useState(0);
+  const [step,setStep]=useState(0);
+  const timers=useRef([]);
+  const s=scenarios[i];
+  const total=s.pulls.length;
+
+  useEffect(()=>{
+    timers.current.forEach(clearTimeout); timers.current=[];
+    setStep(0);
+    for(let n=1;n<=total+2;n++){ timers.current.push(setTimeout(()=>setStep(n), 520*n)); }
+    return ()=>{ timers.current.forEach(clearTimeout); };
+  },[i,total]);
+
+  const pullsDone = Math.min(step, total);
+  const showInsight = step >= total+1;
+  const showActions = step >= total+2;
+
+  return (
+    <section className="act" id="act">
+      <div className="wrap">
+        <div className="reveal">
+          <div className="sec-label">The Agent at Work</div>
+          <h2 className="sec-title">One question. The signal pulled together.<br/>A next step a leader can take.</h2>
+          <p className="sec-intro">A dashboard shows a leader a score and stops. Watch the agent read the feedback, ground it in your HR knowledge, explain what it means for this team, and hand the manager something to do. Pick a question.</p>
+        </div>
+        <div className="demo">
+          <div className="qpicker reveal">
+            {scenarios.map((sc,idx)=>(
+              <button key={idx} className={"qbtn"+(idx===i?" active":"")} onClick={()=>setI(idx)}>
+                <span className="qk">{sc.k}</span>{sc.q}
+              </button>
+            ))}
+          </div>
+          <div className="screen reveal" style={{transitionDelay:'110ms'}}>
+            <div className="screen-bar">
+              <span className="dot" style={{background:'#ff5f57'}}></span>
+              <span className="dot" style={{background:'#febc2e'}}></span>
+              <span className="dot" style={{background:'#28c840'}}></span>
+              <span className="title">HR Agent in Copilot</span>
+            </div>
+            <div className="screen-body" key={i}>
+              <div className="bubble user">{s.q}</div>
+              <div className="investigate">
+                <div className={"inv-label"+(pullsDone>=total?" done":"")}>
+                  <span className="spin"></span>
+                  {pullsDone>=total ? "Pulled "+total+" grounded sources" : "Working, pulling from your feedback and HR knowledge"}
+                </div>
+                {s.pulls.slice(0,pullsDone).map((p,n)=>(
+                  <div className="pull" key={n}>
+                    <span className="pk">&#10003;</span>
+                    <span className="pq">{p.q}<span className="src-tag">Grounded - your HR signal</span></span>
+                    <span className="pv">{p.v}</span>
+                  </div>
+                ))}
+              </div>
+              {showInsight && (
+                <div className="insight">
+                  <div className="il">What it means for this leader</div>
+                  <p>{s.insight}</p>
+                </div>
+              )}
+              {showActions && (
+                <div className="actions">
+                  {s.actions.map((a,n)=>(
+                    <span className="act-pill" key={n} style={{animationDelay:(n*90)+'ms'}}>{a}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <p className="act-caption reveal">Illustrative interaction. <b>Every answer is grounded in your real feedback and HR content, with sources.</b> The agent interprets and suggests. The leader decides.</p>
+      </div>
+    </section>
+  );
+}
+
+function MakeItMatter(){
+  const cards=[
+    {s:"Who",h:"Bring the business owner",p:"Someone who owns the engagement or retention outcome, not only the tool. They make the result real, and they make it stick after the pilot ends."},
+    {s:"What",h:"Name the needle",p:"Agree on one or two measures worth moving. Manager action rate, time from feedback to action, attrition in flagged teams. Their call, not ours."},
+    {s:"When",h:"Define done up front",p:"Decide now what result makes this worth scaling, so success is a number the business chose, not a demo that happened to look good."},
+  ];
+  return (
+    <section className="spine-band" id="business">
+      <div className="glow"></div>
+      <div className="wrap">
+        <div className="spine-headline reveal">
+          <div className="sec-label" style={{color:'var(--cyan-soft)'}}>Before the pilot</div>
+          <h2>Technology is the easy part. The <span className="o">business</span> decides what is worth moving.</h2>
+          <p>You have the harder pieces handled, the surface and the signal. What separates a pilot that scales from one that fizzles is a real business outcome behind it, chosen by the people who own it. Bring HR and the business leaders in early to name the needle, and the pilot proves value everyone already agreed mattered.</p>
+        </div>
+        <div className="does-grid">
+          {cards.map((c,i)=>(
+            <div className="does-card reveal" key={i} style={{transitionDelay:(i*100)+'ms'}}>
+              <span className="step">{c.s}</span>
+              <h4>{c.h}</h4>
+              <p>{c.p}</p>
+            </div>
+          ))}
+        </div>
+        <div className="sticky-line reveal">Don't run a pilot to prove the technology works. Run it to move a <span className="o">number the business chose.</span></div>
+      </div>
+    </section>
+  );
+}
+
+function Pilot(){
+  const pillars=[
+    {n:"1",h:"Start with one population",p:"Pick one group of leaders and the survey results they already have. Narrow and real, so the agent is grounded in feedback those managers recognize as their own."},
+    {n:"2",h:"Prove it is grounded and useful",p:"Every answer cites the feedback and HR content behind it. We validate that managers trust what it says and that it points to the right policy and play."},
+    {n:"3",h:"Tune with the leaders in the room",p:"Short loops with the managers who use it. We adjust the prompts, the guidance, and the actions to how your leaders actually work."}
+  ];
+  return (
+    <section className="pilot" id="pilot">
+      <div className="wrap">
+        <div className="reveal">
+          <div className="sec-label">The Pilot</div>
+          <h2 className="sec-title">Small, grounded, and measured by<br/>one thing that matters.</h2>
+          <p className="sec-intro">Not a platform program. A focused pilot with one set of leaders, proving the agent moves the outcome the business chose, on feedback they already have.</p>
+        </div>
+        <div className="pillars">
+          {pillars.map((p,i)=>(
+            <div className="pillar reveal" key={i} style={{transitionDelay:(i*80)+'ms'}}>
+              <div className="pn">{p.n}</div>
+              <h4>{p.h}</h4>
+              <p>{p.p}</p>
+            </div>
+          ))}
+        </div>
+        <div className="kpi reveal">
+          <div className="ktext">
+            <div className="ksm">The one success metric</div>
+            <div className="kbig">Leaders take <b>more action</b> on feedback, because the agent made the next step obvious.</div>
+          </div>
+          <a className="btn btn-cyan" href="#close">Where this goes next</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Roadmap(){
+  const phases=[
+    {ph:"Phase 1",h:"The agent, grounded in what you have",tag:"The pilot, no new platform required",items:["HR agent live in Copilot and Teams","Grounded in existing survey results","Connected to HR policy and knowledge","Interprets feedback for a specific team","Suggests the next action and the right play"]},
+    {ph:"Phase 2",h:"Deeper signal, native listening",tag:"Add once Phase 1 has earned the move",items:["Live connection to your survey platform","A native ongoing pulse-listening option","Continuous signal, not just survey cycles","Manager-level trends over time","Keep the deep annual survey where it fits"]},
+    {ph:"Phase 3",h:"From answers to standing support",tag:"The compounding return",items:["Proactive nudges when a team's signal shifts","Follow-up on actions a leader committed to","Connect HR systems behind one front door","Patterns across teams surfaced for HR","Leaders supported every week, not once a cycle"]}
+  ];
+  const [i,setI]=useState(0);
+  const p=phases[i];
+  return (
+    <section className="road" id="road">
+      <div className="wrap">
+        <div className="reveal">
+          <div className="sec-label">The Roadmap</div>
+          <h2 className="sec-title">Earn Phase 1. Add the rest<br/>without starting over.</h2>
+          <p className="sec-intro">Because the front door is the same throughout, expansion is addition, never a rebuild. You start with what you have, and you are never trapped by the simple start.</p>
+        </div>
+        <div className="tabs reveal">
+          {phases.map((ph,idx)=>(
+            <button key={idx} className={"tab"+(idx===i?" active":"")} onClick={()=>setI(idx)}>
+              <span className="ph">{ph.ph}</span>{ph.h.split(',')[0]}
+            </button>
+          ))}
+        </div>
+        <div className="panel reveal" key={i}>
+          <div className="ptag">{p.tag}</div>
+          <h3>{p.h}</h3>
+          <ul>{p.items.map((it,n)=><li key={n}>{it}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Closing(){
+  return (
+    <section className="closing" id="close">
+      <div className="wrap">
+        <h2>Close the gap between feedback <span className="o">and action.</span></h2>
+        <p>One agent, in the tool your leaders already use, grounded in the signal you already have. A focused pilot measured by a single honest question. Did leaders act more because of it? We think they will.</p>
+        <div className="cta">
+          <a className="btn btn-cyan" href="#top">Revisit the approach</a>
+          <a className="btn btn-ghost" href="#pilot">See the pilot shape</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer(){
+  return (
+    <footer>
+      <div className="wrap">
+        <div className="foot-row">
+          <div className="fbrand">
+            <div className="logo-dot" style={{width:'30px',height:'30px',fontSize:'13px'}}>CH</div>
+            <span className="f1">C.H. Robinson</span>
+          </div>
+          <div>Point of View, prepared with Microsoft</div>
+        </div>
+        <div className="disc">
+          Prepared as a discussion document for C.H. Robinson. Product names (Microsoft 365 Copilot, Microsoft Teams, Microsoft Viva)
+          refer to Microsoft technologies, and availability, licensing, and capabilities should be confirmed for your tenant. A native
+          ongoing-listening option may require additional licensing. Interactions, scores, and figures shown are illustrative examples
+          to convey the experience and do not represent C.H. Robinson data. Third-party product names belong to their respective owners
+          and are referenced for identification in a partner discussion context.
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function App(){
+  useReveal();
+  return (
+    <React.Fragment>
+      <TopBar/>
+      <Hero/>
+      <Vision/>
+      <Principle/>
+      <SpineBand/>
+      <Ethos/>
+      <Architecture/>
+      <AgentAtWork/>
+      <MakeItMatter/>
+      <Pilot/>
+      <Roadmap/>
+      <Closing/>
+      <Footer/>
+    </React.Fragment>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
