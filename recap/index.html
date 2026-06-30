@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>C.H. Robinson and Microsoft: Call Recap, HR Agents & Integrations</title>
+<meta name="description" content="A recap of the C.H. Robinson and Microsoft working session on HR agents and integrations: what we aligned on, what we confirmed, open items, and the proposed next step." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#10243A;
+    --navy:#004986;
+    --blue:#0071C7;
+    --blue-2:#005CA3;
+    --cyan:#00A3E0;
+    --cyan-soft:#5DC4ED;
+    --slate:#46484A;
+    --slate-soft:#5C6B7A;
+    --paper:#FFFFFF;
+    --paper-2:#F4F7FB;
+    --paper-3:#E9F0F7;
+    --line:#E2E8F0;
+    --line-dark:rgba(255,255,255,.14);
+    --shadow:0 24px 60px -30px rgba(0,73,134,.5);
+    --shadow-sm:0 12px 32px -20px rgba(0,73,134,.42);
+    --display:'Nunito Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+    --body:'Open Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--cyan);color:#fff}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  h1,h2,h3,h4,.display{font-family:var(--display)}
+
+  /* Top bar */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:15px 32px;backdrop-filter:blur(14px);background:rgba(16,36,58,.55);border-bottom:1px solid var(--line-dark);transition:background .4s ease}
+  .topbar.solid{background:rgba(16,36,58,.94)}
+  .brandmark{display:flex;align-items:center;gap:14px;color:#fff}
+  .topbar-logo{height:24px;width:auto;display:block}
+  .topbar-sub{font-family:var(--display);font-weight:600;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan-soft);padding-left:14px;border-left:1px solid var(--line-dark)}
+  @media(max-width:560px){.topbar-sub{display:none}}
+  .topnav{display:flex;gap:26px;align-items:center}
+  .topnav a{color:rgba(255,255,255,.82);font-size:13px;font-weight:600;transition:color .25s}
+  .topnav a:hover{color:var(--cyan-soft)}
+  .topnav .ms{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.55);padding-left:24px;border-left:1px solid var(--line-dark)}
+  @media(max-width:880px){.topnav a:not(.ms){display:none}}
+
+  /* Hero */
+  .hero{position:relative;min-height:84vh;display:flex;align-items:center;color:#fff;overflow:hidden;background:radial-gradient(130% 100% at 80% -10%,#0071C7 0%,#004986 42%,#10243A 100%)}
+  .hero .glow{position:absolute;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(0,163,224,.28),transparent 64%);top:-160px;right:-120px;filter:blur(6px)}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line-dark) 1px,transparent 1px),linear-gradient(90deg,var(--line-dark) 1px,transparent 1px);background-size:62px 62px;mask-image:radial-gradient(120% 80% at 50% 0%,#000 0%,transparent 70%);opacity:.5}
+  .hero .wrap{position:relative;z-index:2;padding-top:120px;padding-bottom:80px}
+  .hero-logo{display:inline-flex;background:#fff;border-radius:12px;padding:14px 20px;margin-bottom:26px;box-shadow:var(--shadow-sm)}
+  .hero-logo img{height:34px;width:auto;display:block}
+  .eyebrow{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--cyan-soft);margin-bottom:18px}
+  .hero h1{font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.08;letter-spacing:-.5px;max-width:18ch;margin-bottom:22px}
+  .hero h1 .accent{color:var(--cyan-soft)}
+  .hero-sub{font-size:clamp(16px,2vw,19px);color:rgba(255,255,255,.82);max-width:60ch;font-weight:400}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid var(--line-dark);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#fff}
+  .chip .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan-soft)}
+
+  /* Sections */
+  section{padding:74px 0}
+  .sec-eyebrow{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:2.2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+  .sec-title{font-size:clamp(24px,3.2vw,34px);font-weight:800;letter-spacing:-.4px;line-height:1.15;margin-bottom:18px;color:var(--ink)}
+  .sec-lead{font-size:17px;color:var(--slate-soft);max-width:64ch}
+
+  .aligned{background:var(--paper-2)}
+  .aligned-card{background:#fff;border:1px solid var(--line);border-left:5px solid var(--cyan);border-radius:18px;padding:32px 34px;box-shadow:var(--shadow-sm);max-width:78ch}
+  .aligned-card .k{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+  .aligned-card p{font-size:19px;color:var(--ink);font-weight:500;line-height:1.5}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:30px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .conf{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 26px;box-shadow:var(--shadow-sm);transition:transform .3s ease,box-shadow .3s ease}
+  .conf:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .conf .num{font-family:var(--display);font-weight:900;font-size:15px;color:#fff;background:var(--blue);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .conf p{font-size:15.5px;color:var(--slate);line-height:1.55}
+
+  .open{background:var(--paper-2)}
+  .owners{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:30px}
+  @media(max-width:760px){.owners{grid-template-columns:1fr}}
+  .owner{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:10px}
+  .owner-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .owner-name{font-family:var(--display);font-weight:800;font-size:16px;color:var(--ink)}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-radius:6px;padding:2px 8px}
+  .tag-cust{background:var(--paper-3);color:var(--blue-2)}
+  .tag-ms{background:#10243A;color:var(--cyan-soft)}
+  .owner p{font-size:14.5px;color:var(--slate);line-height:1.5}
+  .owner .when{font-size:12px;font-weight:700;color:var(--blue);font-family:var(--display);letter-spacing:.3px}
+
+  .next{background:linear-gradient(135deg,#004986 0%,#10243A 100%);color:#fff}
+  .next .sec-eyebrow{color:var(--cyan-soft)}
+  .next .sec-title{color:#fff;max-width:24ch}
+  .next-body{font-size:18px;color:rgba(255,255,255,.86);max-width:66ch;line-height:1.6}
+  .next-pill{display:inline-flex;align-items:center;gap:10px;margin-top:26px;background:rgba(0,163,224,.16);border:1px solid rgba(93,196,237,.4);border-radius:999px;padding:11px 20px;font-weight:600;font-size:14.5px;color:#fff}
+
+  /* P.S. agent card */
+  .ps{background:var(--paper)}
+  .ps-card{position:relative;background:linear-gradient(150deg,#0b1f33 0%,#10243A 60%,#004986 140%);color:#fff;border-radius:22px;padding:42px 44px;box-shadow:var(--shadow);overflow:hidden;max-width:80ch;margin:0 auto}
+  .ps-card .spark{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(0,163,224,.3),transparent 64%);top:-120px;right:-90px}
+  .ps-card .ps-inner{position:relative;z-index:2}
+  .ps-badge{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.1);border:1px solid var(--line-dark);border-radius:999px;padding:7px 15px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan-soft);margin-bottom:20px}
+  .ps-badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--cyan-soft);box-shadow:0 0 0 0 rgba(93,196,237,.7);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(93,196,237,.6)}70%{box-shadow:0 0 0 12px rgba(93,196,237,0)}100%{box-shadow:0 0 0 0 rgba(93,196,237,0)}}
+  .ps-card h3{font-size:23px;font-weight:800;margin-bottom:16px;letter-spacing:-.3px}
+  .ps-card h3 .name{color:var(--cyan-soft)}
+  .ps-card p{font-size:16px;color:rgba(255,255,255,.86);line-height:1.65;margin-bottom:14px}
+  .ps-sig{font-family:var(--display);font-weight:800;font-size:15px;color:#fff;margin-top:22px;display:flex;align-items:center;gap:10px}
+  .ps-sig .sig-mark{font-size:18px}
+  .ps-sig small{display:block;font-weight:500;font-size:12px;color:rgba(255,255,255,.6);letter-spacing:.3px}
+
+  /* Footer */
+  footer{background:var(--ink);color:rgba(255,255,255,.6);padding:38px 0;font-size:12.5px}
+  .foot-row{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+  .fbrand img{height:22px;width:auto}
+  .disc{font-size:11.5px;color:rgba(255,255,255,.42);line-height:1.6;max-width:90ch}
+
+  /* Reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="topbar" id="topbar">
+  <div class="brandmark">
+    <img class="topbar-logo" id="navlogo" alt="C.H. Robinson" />
+    <span class="topbar-sub">Call Recap</span>
+  </div>
+  <nav class="topnav">
+    <a href="#aligned">Aligned</a>
+    <a href="#confirmed">Confirmed</a>
+    <a href="#open">Open items</a>
+    <a href="#next">Next step</a>
+    <span class="ms">with Microsoft</span>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="glow"></div>
+  <div class="hero-grid"></div>
+  <div class="wrap">
+    <div class="hero-logo"><img id="herologo" alt="C.H. Robinson" /></div>
+    <div class="eyebrow">Call recap, prepared for C.H. Robinson</div>
+    <h1>Start with a focused phase one for <span class="accent">quick wins and real time to value.</span></h1>
+    <p class="hero-sub">A short recap of our working session on HR agents and integrations: what we aligned on, what we confirmed, the open items, and where we go next.</p>
+    <div class="hero-meta">
+      <span class="chip"><span class="dot"></span>HR Agents &amp; Integrations</span>
+      <span class="chip"><span class="dot"></span>June 30, 2026</span>
+      <span class="chip"><span class="dot"></span>C.H. Robinson &times; Microsoft</span>
+    </div>
+  </div>
+</header>
+
+<section class="aligned" id="aligned">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-eyebrow">What we aligned on</div>
+      <h2 class="sec-title">One decision drove the call.</h2>
+    </div>
+    <div class="aligned-card reveal">
+      <div class="k">The decision</div>
+      <p>Start with a focused phase one for quick wins and time to value, rather than standing everything up at once. Prove the value is real and accurate first, then engage the business so you tell the story together.</p>
+    </div>
+  </div>
+</section>
+
+<section id="confirmed">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-eyebrow">What we confirmed</div>
+      <h2 class="sec-title">The points everyone agreed on.</h2>
+    </div>
+    <div class="grid">
+      <div class="conf reveal">
+        <div class="num">1</div>
+        <p>Phase one is about quick wins. Land value first, then engage the business so the story gets told together.</p>
+      </div>
+      <div class="conf reveal">
+        <div class="num">2</div>
+        <p>Don't start with Perceptix. The right starting point depends on where your data already sits.</p>
+      </div>
+      <div class="conf reveal">
+        <div class="num">3</div>
+        <p>C.H. Robinson ran initial testing and hit errors connecting into Perceptix that the team wants to review together.</p>
+      </div>
+      <div class="conf reveal">
+        <div class="num">4</div>
+        <p>Sean is out next week and Michael is out the next couple of weeks. More technical folks join when they are back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="open" id="open">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-eyebrow">Open items</div>
+      <h2 class="sec-title">Who owns what coming out of the call.</h2>
+    </div>
+    <div class="owners">
+      <div class="owner reveal">
+        <div class="owner-head"><span class="owner-name">Shelley</span><span class="tag tag-cust">C.H. Robinson</span></div>
+        <p>Share the two Perceptix connection errors so Sean can check whether they look familiar.</p>
+      </div>
+      <div class="owner reveal">
+        <div class="owner-head"><span class="owner-name">Troy &amp; Brett</span><span class="tag tag-cust">C.H. Robinson</span></div>
+        <p>Decide whether you'd like Microsoft's help working through those connection errors.</p>
+      </div>
+      <div class="owner reveal">
+        <div class="owner-head"><span class="owner-name">Sean</span><span class="tag tag-ms">Microsoft</span></div>
+        <p>Walk through the phase one point of view and why to hold off on Perceptix to start.</p>
+      </div>
+      <div class="owner reveal">
+        <div class="owner-head"><span class="owner-name">Sean &amp; Michael</span><span class="tag tag-ms">Microsoft</span></div>
+        <p>Reconnect with the additional technical folks to continue the strategy and next steps.</p>
+        <span class="when">Mid-July</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next" id="next">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-eyebrow">Proposed next step</div>
+      <h2 class="sec-title">Reconnect in mid-July and lock phase one.</h2>
+    </div>
+    <p class="next-body reveal">When Sean and Michael are back with the additional technical folks, let's review the Perceptix errors and where your data lives, then lock the phase one scope and owners. We'll use that as the working model for rollout.</p>
+    <div class="next-pill reveal"><span style="width:8px;height:8px;border-radius:50%;background:var(--cyan-soft)"></span>Target: mid-July working session</div>
+  </div>
+</section>
+
+<section class="ps" id="ps">
+  <div class="wrap">
+    <div class="ps-card reveal">
+      <div class="spark"></div>
+      <div class="ps-inner">
+        <div class="ps-badge"><span class="pulse"></span>P.S. from the agent</div>
+        <h3>Hi C.H. Robinson team. I'm <span class="name">Scout</span>.</h3>
+        <p>I'm the agent that put this recap together. I sat in on the conversation, pulled out what actually mattered, and drafted this page for Sean to review before it reached you. The same family of agents built the HR agent demo you saw.</p>
+        <p>You spent a good part of today talking about building agents like me, so it felt right to say hello rather than stay invisible in the background. When you stand up your own phase one, this is the kind of quick, accurate win we mean: one job, done well, where your team already works.</p>
+        <p>Looking forward to seeing what you build. I'll be here for the next recap.</p>
+        <div class="ps-sig"><span class="sig-mark">&#9889;</span><span>Scout<small>Recap agent, drafted for C.H. Robinson &amp; Microsoft</small></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="fbrand"><img id="footlogo" alt="C.H. Robinson" /></div>
+      <div>Call recap, prepared with Microsoft</div>
+    </div>
+    <div class="disc">
+      Prepared as a working recap for C.H. Robinson. Product names (Microsoft 365 Copilot, Microsoft Teams, Microsoft Viva, Perceptix) refer to their respective technologies, and availability, licensing, and capabilities should be confirmed for your tenant. This recap reflects the working portion of the conversation and is intended as a shared reference for next steps, not a commitment. Third-party product names belong to their respective owners and are referenced for identification in a partner discussion context.
+    </div>
+  </div>
+</footer>
+
+<script>
+  var CHR_LOGO_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 782.61 175.45"><defs><style>.cls-1{fill:#00a3e0;}.cls-2{fill:#101820;}</style></defs><polygon class="cls-1" points="55.9 41.76 72.24 32.32 72.24 71.63 75.97 73.78 79.7 71.63 79.7 32.32 96.05 41.76 99.78 35.29 75.97 21.55 52.16 35.29 55.9 41.76"/><polygon class="cls-1" points="46.2 128.09 29.86 118.66 63.9 99.01 63.9 94.7 60.16 92.54 26.13 112.19 26.13 93.32 18.66 93.32 18.66 120.81 42.47 134.56 46.2 128.09"/><path class="cls-1" d="M94,18.12,18,62V149.7l76,43.86,76-43.86V62Zm68.5,127.27L94,185,25.48,145.39V66.29L94,26.73l68.5,39.56Z" transform="translate(-18.02 -18.12)"/><polygon class="cls-1" points="105.74 47.36 122.08 56.79 75.97 83.42 29.86 56.79 46.2 47.36 42.47 40.89 18.66 54.64 18.66 82.13 26.13 82.13 26.13 63.26 72.24 89.88 72.24 143.13 55.9 133.69 52.16 140.16 75.97 153.9 99.78 140.16 96.05 133.69 79.7 143.13 79.7 89.88 125.82 63.26 125.82 82.13 133.28 82.13 133.28 54.64 109.47 40.89 105.74 47.36"/><polygon class="cls-1" points="125.82 93.32 125.82 112.19 91.78 92.54 88.05 94.69 88.05 99.01 122.08 118.66 105.74 128.09 109.47 134.56 133.28 120.81 133.28 93.32 125.82 93.32"/><path class="cls-2" d="M253.69,128.17c-2.63,3.54-7.18,8.4-12.85,8.4H228.18a12.7,12.7,0,0,1-6.28-1.82,33.47,33.47,0,0,1-7.39-7.19,10.26,10.26,0,0,1-1.62-5.77V89.9a10,10,0,0,1,1.62-5.67c1.22-1.72,5.27-6.07,7.39-7.29a13.83,13.83,0,0,1,6.28-1.82h12.66c5.67,0,10.22,5,12.85,8.4a33.09,33.09,0,0,1,2.13,3.55L245.49,90s-3-3.75-4.55-4.66a.63.63,0,0,0-.41-.1H228.59a1,1,0,0,0-.41.1,15.89,15.89,0,0,0-4.56,4.46,4.18,4.18,0,0,0-.1,1.11v30.78c0,1.22,3.14,3.85,4.66,4.66.1.1.61.1.71.1h11.54a1.15,1.15,0,0,0,.51-.1c2.12-1,4.55-4.76,4.55-4.76l10.33,2.73A18.63,18.63,0,0,1,253.69,128.17Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M265.14,136.07V123.31h12.45v12.76Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M320.92,136.07v-25H298.85v25H288.22V75.52h10.63v25.42h22.07V75.52h10.63v60.55Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M342.18,136.07V123.31h12.46v12.76Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M429.46,104.58A34.8,34.8,0,0,1,424,110a9.58,9.58,0,0,1-2.63,1.41l12,24.71H421.86l-11.24-23.9H399v23.9H388.35V75.52H416.8A13.08,13.08,0,0,1,424,77.75a35.5,35.5,0,0,1,5.47,5.57,11.32,11.32,0,0,1,1.82,6.18v8.9A11.08,11.08,0,0,1,429.46,104.58Zm-8.81-15a2.31,2.31,0,0,0-.1-.71c-.61-1.12-2.23-3.14-3.24-3.24H399v16.4H416.8c.91,0,2.94-1.93,3.75-3.34a1,1,0,0,0,.1-.41Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M487.57,127.46c-1.31,1.72-5.26,6.08-7.39,7.29a13,13,0,0,1-6.28,1.82H458.52a12.7,12.7,0,0,1-6.28-1.82c-2.13-1.21-6.18-5.57-7.39-7.29a10.18,10.18,0,0,1-1.62-5.77V90a10.18,10.18,0,0,1,1.62-5.77c1.21-1.72,5.26-6.07,7.39-7.29a12.7,12.7,0,0,1,6.28-1.82H473.9a13,13,0,0,1,6.28,1.82c2.13,1.22,6.08,5.57,7.39,7.29A10.18,10.18,0,0,1,489.19,90v31.69A10.18,10.18,0,0,1,487.57,127.46Zm-33.71-5.87s0,.3.1.4a16.1,16.1,0,0,0,4.45,4.36,1.15,1.15,0,0,0,.51.1H473.5a1.34,1.34,0,0,0,.5-.1,16.11,16.11,0,0,0,4.46-4.36,1,1,0,0,0,.1-.4V90.3s0-.4-.1-.5A16.84,16.84,0,0,0,474,85.34a1.09,1.09,0,0,0-.5-.1H458.92s-.4,0-.51.1A16.82,16.82,0,0,0,454,89.8a1.34,1.34,0,0,0-.1.5Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M543.36,128.37a33.81,33.81,0,0,1-5.37,5.47,13.39,13.39,0,0,1-7.29,2.23H502.25V75.52H530.7A13,13,0,0,1,538,77.85a33.81,33.81,0,0,1,5.37,5.47,11.17,11.17,0,0,1,1.72,6.28v7.49c0,4.25-1.62,6.48-4,8.81,2.33,2.32,4,4.45,4,8.7v7.7A10.88,10.88,0,0,1,543.36,128.37Zm-8.91-31.48V89.7a2.16,2.16,0,0,0-.1-.51c-.91-1.62-2.84-3.54-3.75-3.54H512.88v15.29H530.7c.91,0,2.94-1.83,3.65-3.35A1.73,1.73,0,0,0,534.45,96.89Zm0,25V114.7a1.21,1.21,0,0,0-.1-.5c-.91-1.62-2.84-3.44-3.75-3.44H512.88v15.18H530.7c.91,0,2.94-1.82,3.65-3.34A2.47,2.47,0,0,0,534.45,121.89Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M559.46,136.07V75.52h10.63v60.55Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M617.27,136.07l-21-40.2v40.2H585.68V75.52h11.44l20.76,40.7V75.52h10.63v60.55Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M685.71,127.46c-1.22,1.82-5.27,6.08-7.39,7.29a14.21,14.21,0,0,1-6.28,1.82H654.43c-6,0-10.23-4.86-12.86-8.4a21.28,21.28,0,0,1-1.82-3.14l10-3.34a24.73,24.73,0,0,0,4.45,4.66,1.82,1.82,0,0,0,.71.1h16.61a1.45,1.45,0,0,0,.6-.1c1.52-.81,4.56-3.85,4.56-4.66v-6a1.82,1.82,0,0,0-1.22-1.72l-26.32-7.5c-5.16-1.41-7.9-6.38-7.9-11V90a10.56,10.56,0,0,1,1.52-5.77,34.44,34.44,0,0,1,7.5-7.29,13.75,13.75,0,0,1,6.27-1.82h15c6.07,0,10.22,5,12.85,8.4a19.53,19.53,0,0,1,2,3.55L676.19,90a20.64,20.64,0,0,0-4.45-4.66s-.1-.1-.61-.1H656.86a1.48,1.48,0,0,0-.61.1c-1.62.81-4.36,3.65-4.36,4.46v5.06A1.75,1.75,0,0,0,653,96.58l26.42,7.7c5.17,1.41,7.9,6.48,7.9,11v6.38A9.83,9.83,0,0,1,685.71,127.46Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M743.12,127.46c-1.32,1.72-5.27,6.08-7.39,7.29a13,13,0,0,1-6.28,1.82H714.06a12.7,12.7,0,0,1-6.28-1.82c-2.12-1.21-6.17-5.57-7.39-7.29a10.26,10.26,0,0,1-1.62-5.77V90a10.26,10.26,0,0,1,1.62-5.77c1.22-1.72,5.27-6.07,7.39-7.29a12.7,12.7,0,0,1,6.28-1.82h15.39a13,13,0,0,1,6.28,1.82c2.12,1.22,6.07,5.57,7.39,7.29A10.26,10.26,0,0,1,744.74,90v31.69A10.26,10.26,0,0,1,743.12,127.46Zm-33.72-5.87s0,.3.1.4a16.25,16.25,0,0,0,4.46,4.36,1.09,1.09,0,0,0,.5.1H729a1.38,1.38,0,0,0,.51-.1A16.1,16.1,0,0,0,734,122a.92.92,0,0,0,.11-.4V90.3s0-.4-.11-.5a16.82,16.82,0,0,0-4.45-4.46,1.1,1.1,0,0,0-.51-.1H714.46s-.4,0-.5.1a17,17,0,0,0-4.46,4.46,1.34,1.34,0,0,0-.1.5Z" transform="translate(-18.02 -18.12)"/><path class="cls-2" d="M789.39,136.07l-21-40.2v40.2H757.8V75.52h11.44L790,116.22V75.52h10.63v60.55Z" transform="translate(-18.02 -18.12)"/></svg>';
+  var LOGO_COLOR = 'data:image/svg+xml;utf8,' + encodeURIComponent(CHR_LOGO_SVG);
+  var LOGO_WHITE = 'data:image/svg+xml;utf8,' + encodeURIComponent(CHR_LOGO_SVG.replace(/#00a3e0/gi,'#ffffff').replace(/#101820/gi,'#ffffff'));
+  document.getElementById('navlogo').src = LOGO_WHITE;
+  document.getElementById('herologo').src = LOGO_COLOR;
+  document.getElementById('footlogo').src = LOGO_WHITE;
+
+  var topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 40){ topbar.classList.add('solid'); } else { topbar.classList.remove('solid'); }
+  });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.14});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+</script>
+</body>
+</html>
